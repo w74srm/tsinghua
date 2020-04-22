@@ -1,39 +1,54 @@
-#include<iostream>
-#include<cstring>
+#include<cstdio>
+#include<vector>
+#include<algorithm>
 using namespace std;
-
-int vis[1005],map[1005][1005];
-
-void dfs(int a,int n,int c){
-    for(int i=1;i<=n;i++){
-        vis[a]=1;
-        if(map[a][i]==1&&vis[i]==0&&i!=c){
-            dfs(i,n,c);
-        }
-    }
+ 
+const int maxn = 1000;
+int N, M, K;
+vector<int> G[maxn];
+bool vis[maxn] = { false };
+void DFS(int u)
+{
+	vis[u] = true;
+	for (int i = 0; i < G[u].size(); i++)
+	{
+		int t = G[u][i];
+		if (!vis[t])
+		{
+			DFS(t);
+		}
+	}
 }
-
-int main(){
-    int N,M,K;
-    cin>>N>>M>>K;
-    int start,end;
-    for(int i=0;i<M;i++){
-        cin>>start>>end;
-        map[start][end]=1;
-        map[end][start]=1;
-    }
-    for(int kase=0;kase<K;kase++){
-        int res=0;
-        int c;
-        cin>>c;
-        memset(vis,0,sizeof(vis));
-        for(int i=1;i<=N;i++){
-            if(vis[i]==0&&i!=c){
-                dfs(i,N,c);
-                res++;
-            }
-        }
-        cout<<res-1<<endl;
-    }
-    return 0; 
+int DFSTrave(vector<int>*G,int destroy,bool*vis)
+{
+	vis[destroy] = true;
+	int count = -1;
+	for (int i = 0; i < N; i++)
+	{
+		if (!vis[i])
+		{
+			DFS(i);
+			count++;
+		}
+	}
+	return count;
+}
+int main()
+{
+	scanf("%d %d %d", &N, &M, &K);
+	int u,v;
+	for (int i = 0; i < M; i++)
+	{
+		scanf("%d %d", &u,&v);
+		G[u-1].push_back(v-1);
+		G[v-1].push_back(u-1);
+	}
+	int destroy;
+	for (int i = 0; i < K; i++)
+	{
+		scanf("%d", &destroy);
+		printf("%d\n", DFSTrave(G, destroy-1, vis));
+		fill(vis, vis + maxn, false);
+	}
+	return 0;
 }

@@ -1,19 +1,23 @@
 {
+    "version": "2.0.0",
     "tasks": [
         {
             "type": "shell",
-            "label": "g++ build active file",
-            "command": "/usr/bin/g++",
+            "label": "g++",    //修改此项
+            "command": "D:/Dev-Cpp/MinGW64/bin/g++.exe",
             "args": [
                 "-g",
                 "${file}",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "${fileDirname}/${fileBasenameNoExtension}.exe"
             ],
             "options": {
-                "cwd": "/usr/bin"
-            }
+                "cwd": "D:/Dev-Cpp/MinGW64/bin"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build"
         }
-    ],
-    "version": "2.0.0"
+    ]
 }
