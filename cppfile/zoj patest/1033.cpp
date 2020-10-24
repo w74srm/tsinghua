@@ -52,28 +52,27 @@ int main()
 			if (priceMin < st[now].price)
 			{
 				if (nowTank < need) {
-					ans += (need - nowTank)*st[now].price;//补足need
-					nowTank = 0;//到达加油站k后油箱内油量为0
+					ans += (need - nowTank)*st[now].price;
+					nowTank = 0;
  
 				}
-				else//如果当前油量超过need
+				else
 				{
-					nowTank -= need;//直接到达加油站k	
+					nowTank -= need;
 				}
 			}
-			else//如果加油站k的油价高于当前油价
+			else
 			{
-				ans += (Cmax - nowTank)*st[now].price;//将油箱加满
-				//到达加油站k后油箱内油量为Cmax-need
+				ans += (Cmax - nowTank)*st[now].price;
 				nowTank = Cmax - need;
 			}
-			now = k;//到达加油站k，进入下一层循环
+			now = k;
 		}
-		if (now == n)//能到达终点
+		if (now == n)
 		{
 			printf("%.2f\n", ans);
 		}
-		else//不能到达终点
+		else
 		{
 			printf("The maximum travel distance = %.2f\n", st[now].dis + MAX);
 		}
