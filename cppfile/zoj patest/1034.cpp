@@ -5,28 +5,27 @@
 #include<vector>
 using namespace std;
  
-const int M = 26 * 26 * 26;	//结点最大数目
-vector<int> v[M];	//图的邻接表表示
-vector<int> node;	//存储遍历的起点
+const int M = 26 * 26 * 26;	
+vector<int> v[M];	
+vector<int> node;	
 int visited[M] = { 0 };
-int w[M] = { 0 };	//存储每个人的通话时长
-int n, k;	//k是阈值
-int cnt = 0;//达标的帮派数目
-int pnum;	//一个帮派的成员数
-int maxtime;//成员中的最大通话时长
-int headtime;//头目通话时长
-int headId;//头目id
+int w[M] = { 0 };
+int n, k;	
+int cnt = 0;
+int pnum;
+int maxtime;
+int headtime;
+int headId;
  
-int toId(string &s);//字符串名字转换为数字编号
-string toName(int x);//编号转换为名字，用于输出
-void dfs(int start);//dfs算法
+int toId(string &s);
+string toName(int x);
+void dfs(int start);
  
 int main()
 {
-	//freopen("in.txt", "r", stdin);
 	cin >> n >> k;
  
-	for (int i = 0; i < n; i++)//读入数据，同时转换成数字编号
+	for (int i = 0; i < n; i++)
 	{
 		string s1, s2;
 		int wgt;
@@ -38,7 +37,7 @@ int main()
 		v[d2].push_back(d1);
 		w[d1] += wgt;
 		w[d2] += wgt;
-		node.push_back(d1);//稀疏边，存储遍历的起点。这样不需要从0一个个遍历了
+		node.push_back(d1);
 	}
  
 	map<string, int> h_map;
