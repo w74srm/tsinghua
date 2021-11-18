@@ -7,7 +7,7 @@
  
         {
             "name": "(gdb) Launch",
-            "preLaunchTask": "g++.exe - Build and debug active file",
+            "preLaunchTask": "gdb.exe - Build and debug active file",
             "type": "cppdbg",//只能为cppdbg
             "request": "launch",
             "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",//调试程序的路径名称

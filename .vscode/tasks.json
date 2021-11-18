@@ -4,7 +4,7 @@
 		
 		{
 			"type": "cppbuild",
-			"label": "g++.exe - Build and debug active file",
+			"label": "gdb.exe - Build and debug active file",
 			"command": "F:\\environment\\mingw64\\bin\\g++.exe",
 			"args": [
 				"-g",
