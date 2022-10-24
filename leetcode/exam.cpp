@@ -2,40 +2,51 @@
 using namespace std;
 
 
-int get_min_cost(string str1, string str2) {
-    // write code here
-    int len1 = str1.size();
-    int len2 = str2.size();
-    vector< vector <int> > dp(len2 + 1, vector<int> (len1 + 1));
-    for(int i = 0 ; i < len2 + 1; i++)
+void quicksort(vector<int> &nums, int left, int right, vector<vector<long long> >flight)
+{
+    if(left >= right) return;
+    int base = nums[left];
+    int i = left, j = right;
+    while(i < j)
     {
-        dp[i][0] = i;
+        while(i < j && flight[nums[j]][1] >= flight[base][1]) j--;
+        swap(nums[i], nums[j]);
+        while(i < j && flight[nums[i]][1] <= flight[base][1]) i++;
+        swap(nums[i], nums[j]);
     }
-    for(int i = 0 ; i < len1 + 1; i++)
-    {
-        dp[0][i] = 2 * i;
-    }
-    for(int i = 1; i < len2 + 1; i++)
-    {
-        for(int j = 1; j < len1 + 1; j++)
-        {
-            if(str1[j-1] == str2[i - 1]) dp[i][j] = min(dp[i-1][j-1], min(dp[i-1][j], dp[i][j-1]));
-            else
-            {
-                dp[i][j] = min(dp[i-1][j-1] + 3, min(dp[i-1][j] + 1, dp[i][j-1] + 2));
-            }
-        }
-    }
-    return dp[len2][len1];
+    quicksort(nums, left, i-1, flight);
+    quicksort(nums, i+1, right, flight);
 }
 
 
-int main(){
-    string str1, str2;
-    cin >> str1;
-    cin >> str2;
-    double max = 0;
-    int res = get_min_cost(str1, str2);
-    cout << res;
+int main()
+{
+    int n;
+    cin >> n;
+    vector<vector<long long> > flight(n, vector<long long>(2, 0));
+    for(int i = 0; i < n; i++)
+    {
+        cin >> flight[i][0] >> flight[i][1];
+    }
+    vector<int> nums(n, 0);
+    for(int i = 0; i < n; i++)
+    {
+        nums[i] = i;
+    }
+    quicksort(nums, 0, n-1, flight);
+    for(int i = 0; i < n; i++)
+    {
+        cout << nums[i] << ' ';
+    }
+    cout << endl;
+    vector<int> index(n, 0);
+    for(int i = 0; i < n; i++)
+    {
+        index[nums[i]] = i;
+    }
+    for(int i = 0; i < n; i++)
+    {
+        cout << flight[index[n-i-1]][0] << ' ' << flight[i][1] << endl;
+    }
     return 0;
 }
