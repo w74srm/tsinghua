@@ -1,52 +1,22 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-
-void quicksort(vector<int> &nums, int left, int right, vector<vector<long long> >flight)
-{
-    if(left >= right) return;
-    int base = nums[left];
-    int i = left, j = right;
-    while(i < j)
-    {
-        while(i < j && flight[nums[j]][1] >= flight[base][1]) j--;
-        swap(nums[i], nums[j]);
-        while(i < j && flight[nums[i]][1] <= flight[base][1]) i++;
-        swap(nums[i], nums[j]);
-    }
-    quicksort(nums, left, i-1, flight);
-    quicksort(nums, i+1, right, flight);
-}
-
-
 int main()
 {
-    int n;
-    cin >> n;
-    vector<vector<long long> > flight(n, vector<long long>(2, 0));
-    for(int i = 0; i < n; i++)
+    string s1, s2;
+    cin >> s1 >> s2;
+    int len1 = s1.length();
+    int len2 = s2.length();
+    vector<vector<int>> dp(len1+1, vector<int> (len2+1, 0));
+
+    for(int i = 1; i <= len1; i++)
     {
-        cin >> flight[i][0] >> flight[i][1];
+        for(int j = 1; j <= len2; j++)
+        {
+            if(s1[i-1] == s2[j-1]) dp[i][j] = dp[i-1][j-1] + 1;
+            else dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+        }
     }
-    vector<int> nums(n, 0);
-    for(int i = 0; i < n; i++)
-    {
-        nums[i] = i;
-    }
-    quicksort(nums, 0, n-1, flight);
-    for(int i = 0; i < n; i++)
-    {
-        cout << nums[i] << ' ';
-    }
-    cout << endl;
-    vector<int> index(n, 0);
-    for(int i = 0; i < n; i++)
-    {
-        index[nums[i]] = i;
-    }
-    for(int i = 0; i < n; i++)
-    {
-        cout << flight[index[n-i-1]][0] << ' ' << flight[i][1] << endl;
-    }
+    cout << dp[len1][len2] << endl;
     return 0;
 }
